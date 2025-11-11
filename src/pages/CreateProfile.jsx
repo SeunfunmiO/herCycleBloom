@@ -30,7 +30,6 @@ const CreateProfile = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
-            password: '',
         },
         onSubmit: (values) => {
             console.log(values);

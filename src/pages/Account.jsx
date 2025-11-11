@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ExportDataModal from '../components/ExportDataModal'
 import ResetDataModal from '../components/ResetDataModal'
+import LogOutModal from '../components/LogOutModal'
 
 const Account = () => {
     const navigate = useNavigate()
@@ -63,15 +64,7 @@ const Account = () => {
 
                     <hr className='border-gray-200 border ml-10' />
 
-                    <button
-                        className="flex items-center justify-between cursor-pointer">
-                        <div className='flex items-center gap-5'>
-                            <LogOut className='text-darkslategray size-5 lg:size-6' />
-                            <h3 className="text-[15px] md:text-base font-medium lg:text-lg">Log Out</h3>
-                        </div>
-
-                        <ChevronRight className="text-gray-300 w-5 md:w-6" />
-                    </button>
+                    <LogOutModal />
                 </div>
             </div>
 

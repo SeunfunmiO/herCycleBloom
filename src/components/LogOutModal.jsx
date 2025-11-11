@@ -1,62 +1,60 @@
-import { ChevronRight, LucideRefreshCcw } from 'lucide-react'
+import { ChevronRight, LogOut } from 'lucide-react'
 import React, { useState } from 'react'
-import LabelProps from './LabelProps'
 
-const ResetDataModal = () => {
-    const [openResetModal, setOpenResetModal] = useState(false)
+const LogOutModal = () => {
+    const [openLogoutModal, setOpenLogoutModal] = useState(false)
     const [isConfirmed, setIsConfirmed] = useState(false)
-
 
     return (
         <div>
             <button
-                onClick={() => setOpenResetModal(true)}
+            onClick={()=>setOpenLogoutModal(true)}
                 className="flex items-center justify-between cursor-pointer w-full">
                 <div className='flex items-center gap-5'>
-                    <LucideRefreshCcw className='text-darkslategray size-5 lg:size-6' />
-                    <h3 className="text-[15px] md:text-base font-medium lg:text-lg">Reset Data</h3>
+                    <LogOut className='text-darkslategray size-5 lg:size-6' />
+                    <h3 className="text-[15px] md:text-base font-medium lg:text-lg">Log Out</h3>
                 </div>
 
                 <ChevronRight className="text-gray-300 w-5 md:w-6" />
             </button>
 
 
-            {openResetModal && (
+            {openLogoutModal && (
                 <div
                     className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-                    onClick={() => setOpenResetModal(false)}
+                    onClick={() => setOpenLogoutModal(false)}
                 >
                     <div
                         className="bg-white rounded-2xl shadow-lg w-11/12 max-w-md p-4 relative"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-lg font-bold text-gray-800 text-center mb-4">Reset Data</h2>
+                        <h2 className="text-lg font-bold text-gray-800 text-center mb-4">Logout</h2>
                         <hr className='border border-gray-200' />
                         <p className="text-gray-800 my-5 text-center text-sm lg:text-base">
-                            Are you sure you want to reset data ? If you click proceed , all your data will be deleted permanently.
+                            Are you sure you want to logout ? If you do , you will need to enter your credentials to access your account again.
                         </p>
 
                         <div className='flex justify-center items-center my-5'>
-                            <img src="./Group 828.png" alt="Image" />
+                            <img src="./Logout.png" alt="Image" />
                         </div>
 
                         <div className="flex justify-center items-center gap-3 mt-6">
                             <button
-                                onClick={() => setOpenResetModal(false)}
+                                onClick={() => setOpenLogoutModal(false)}
                                 className="py-2 rounded-lg outline outline-pink-400 hover:bg-palevioletred hover:text-white
-                                     text-palevioletred font-medium w-full text-sm lg:text-base"
+                                         text-palevioletred font-medium w-full text-sm lg:text-base"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={() => {
-                                    setOpenResetModal(false)
+                                    setOpenLogoutModal(false)
                                     setIsConfirmed(true);
                                 }}
                                 className="py-2 rounded-lg bg-palevioletred text-white hover:bg-pink-600 font-medium w-full text-sm 
-                                lg:text-base"
+                                    lg:text-base"
                             >
-                                Proceed
+                                Log Out
                             </button>
                         </div>
                     </div>
@@ -66,7 +64,7 @@ const ResetDataModal = () => {
             {isConfirmed && (
                 <div
                     className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-                    onClick={() => setOpenResetModal(false)}
+                    onClick={() => setOpenLogoutModal(false)}
                 >
                     <div
                         className="bg-white rounded-2xl shadow-lg w-11/12 max-w-md p-4 relative"
@@ -84,7 +82,7 @@ const ResetDataModal = () => {
                             <button
                                 onClick={() => setIsConfirmed(false)}
                                 className="py-2 rounded-lg outline outline-pink-400 hover:bg-palevioletred hover:text-white
-                                     text-palevioletred font-medium w-full text-sm lg:text-base"
+                                         text-palevioletred font-medium w-full text-sm lg:text-base"
                             >
                                 Cancel
                             </button>
@@ -93,7 +91,7 @@ const ResetDataModal = () => {
                                     setIsConfirmed(true);
                                 }}
                                 className="py-2 rounded-lg bg-palevioletred text-white hover:bg-pink-600 font-medium w-full text-sm 
-                                lg:text-base"
+                                    lg:text-base"
                             >
                                 Reset
                             </button>
@@ -105,4 +103,4 @@ const ResetDataModal = () => {
     )
 }
 
-export default ResetDataModal
+export default LogOutModal

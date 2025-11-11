@@ -23,6 +23,8 @@ import EditPeriodDuration from './pages/EditPeriodDuration'
 import Account from './pages/Account'
 import ImportFile from './pages/ImportFile'
 import ChangePassword from './pages/ChangePassword'
+import SettingsRemainder from './pages/SettingsRemainder'
+import Languages from './pages/Languages'
 
 
 const App = () => {
@@ -52,14 +54,8 @@ const App = () => {
         <Route path='/account' element={<Account />} />
         <Route path='/import-file' element={<ImportFile />} />
         <Route path='/change-password' element={<ChangePassword />} />
-
-       
-
-
-
-
-
-
+        <Route path='/set-reminder' element={<SettingsRemainder />} />
+        <Route path='/languages' element={<Languages />} />
 
 
       </Routes>
