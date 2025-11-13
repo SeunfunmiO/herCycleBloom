@@ -5,7 +5,8 @@
   --color-palevioletred: #eb477e;
   --color-lavender: #fde6ee;
   --color-babypink: #fbbecf;
-  --color-darkslategray:#252b37
+  --color-darkslategray: #252b37;
+  --color-dimgray: #876370;
   --breakpoint-xs: 320px;
   --breakpoint-xsm: 375px;
   --breakpoint-smd: 430px;
@@ -56,4 +57,13 @@ input[type="range"].slider-pink::-moz-range-thumb {
 .react-calendar__tile--now {
   background: transparent !important;
   color: #ec4899 !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

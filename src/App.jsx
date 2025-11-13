@@ -25,6 +25,9 @@ import ImportFile from './pages/ImportFile'
 import ChangePassword from './pages/ChangePassword'
 import SettingsRemainder from './pages/SettingsRemainder'
 import Languages from './pages/Languages'
+import Theme from './pages/Theme'
+import History from './pages/History'
+import CycleDetails from './components/CycleDetails'
 
 
 const App = () => {
@@ -44,6 +47,7 @@ const App = () => {
         <Route path='/record-data' element={<LogEntry2 />} />
         <Route path='/success' element={<SuccessPage />} />
         <Route path='/view-calendar' element={<ViewCalendar />} />
+        <Route path='/theme' element={<Theme />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/profile-settings' element={<SettingsProfile />} />
         <Route path='/edit-name' element={<EditName />} />
@@ -56,6 +60,8 @@ const App = () => {
         <Route path='/change-password' element={<ChangePassword />} />
         <Route path='/set-reminder' element={<SettingsRemainder />} />
         <Route path='/languages' element={<Languages />} />
+        <Route path='/history' element={<History />} />
+        <Route path='/cycle-details' element={<CycleDetails />} />
 
 
       </Routes>

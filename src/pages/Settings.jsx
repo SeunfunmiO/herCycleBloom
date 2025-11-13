@@ -3,8 +3,10 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import { useNavigate } from 'react-router-dom'
 
+
 const Settings = () => {
     const navigate = useNavigate()
+
 
     return (
         <div className='bg-[#f9f9f9]'>
@@ -85,7 +87,9 @@ const Settings = () => {
 
                     <hr className='border-gray-200 border ml-10' />
 
-                    <button className="flex justify-between items-center cursor-pointer">
+                    <button
+                        onClick={() => navigate('/theme')}
+                        className="flex justify-between items-center cursor-pointer">
                         <div className='flex items-center gap-5'>
                             <img src="./brush.svg" alt="Brush" />
                             <h3 className="font-medium">Theme</h3>
