@@ -28,6 +28,7 @@ import Languages from './pages/Languages'
 import Theme from './pages/Theme'
 import History from './pages/History'
 import CycleDetails from './components/CycleDetails'
+import ExportDataCycle from './pages/ExportDataCycle'
 
 
 const App = () => {
@@ -62,6 +63,8 @@ const App = () => {
         <Route path='/languages' element={<Languages />} />
         <Route path='/history' element={<History />} />
         <Route path='/cycle-details' element={<CycleDetails />} />
+        <Route path='/export-data' element={<ExportDataCycle />} />
+
 
 
       </Routes>
