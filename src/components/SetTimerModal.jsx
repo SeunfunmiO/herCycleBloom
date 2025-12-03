@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Clock } from "lucide-react";
 import React, { useState } from "react";
 
@@ -17,8 +18,36 @@ const SetTimeModal = () => {
         }));
     };
 
-    const handleSave = () => {
-        setOpenModal(false);
+    const handleSave = async () => {
+        try {
+            const token = localStorage.getItem('token')
+
+            if (!token) {
+                return;
+            }
+
+            await axios.put("http://localhost:5500/user/set-reminder", {
+                reminderTime: true,
+                reminderTypes: {
+                    periodStartAlarm: true,
+                    periodEndAlarm: true,
+                    symptomsAlarm: true,
+                    ovulationAlarm: true
+                },
+                reminderEnabled: true,
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            setOpenModal(false);
+        } catch (error) {
+            console.log("Error setting reminder : ", error);
+
+        }
     };
 
 
@@ -32,13 +61,18 @@ const SetTimeModal = () => {
         String(i).padStart(2, "0")
     );
 
+
+
     return (
         <div>
             <div className="flex justify-between items-center w-full">
-                <h1 className="font-medium">Set Time</h1>
+                <h1
+                    className="font-medium text-neutral-900 dark:text-neutral-100">
+                    Set Time
+                </h1>
 
                 <button
-                    className="text-gray-500 flex items-center gap-2 outline-0 cursor-pointer"
+                    className="text-gray-500 dark:text-neutral-500 flex items-center gap-2 outline-0 cursor-pointer"
                     onClick={() => setOpenModal(true)}
                 >
                     <span>
@@ -54,13 +88,14 @@ const SetTimeModal = () => {
                     onClick={() => setOpenModal(false)}
                 >
                     <div
-                        className="bg-white w-[90%] max-w-sm rounded-2xl shadow-lg p-5 animate-fadeIn"
+                        className="bg-white dark:bg-neutral-800 w-[90%] max-w-sm rounded-2xl shadow-lg p-5 animate-fadeIn"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-lg font-bold text-center mb-4 text-gray-800">
+                        <h2 className="text-lg font-bold text-center mb-4 text-gray-800 dark:text-neutral-100">
                             Set Time
                         </h2>
-                        <hr className="border border-gray-200 mb-4" />
+
+                        <hr className="border dark:border-neutral-700 border-gray-200 mb-4" />
 
                         <div className="flex justify-center items-center gap-3 my-6">
                             <div className="h-32 overflow-y-scroll snap-y snap-mandatory scrollbar-hide w-16 text-center">
@@ -70,7 +105,7 @@ const SetTimeModal = () => {
                                         onClick={() => handleChange("hour", hr)}
                                         className={`py-2 cursor-pointer snap-center text-lg font-semibold ${hr === time.hour
                                             ? "text-palevioletred"
-                                            : "text-gray-600"
+                                            : "text-gray-600 dark:text-neutral-300"
                                             }`}
                                     >
                                         {hr}
@@ -78,7 +113,7 @@ const SetTimeModal = () => {
                                 ))}
                             </div>
 
-                            <span className="font-bold text-2xl">:</span>
+                            <span className="font-bold text-2xl text-neutral-900 dark:text-neutral-300">:</span>
 
                             <div className="h-32 overflow-y-scroll snap-y snap-mandatory scrollbar-hide w-16 text-center">
                                 {minutes.map((min) => (
@@ -87,7 +122,7 @@ const SetTimeModal = () => {
                                         onClick={() => handleChange("minute", min)}
                                         className={`py-2 cursor-pointer snap-center text-lg font-semibold ${min === time.minute
                                             ? "text-palevioletred"
-                                            : "text-gray-600"
+                                            : "text-gray-600 dark:text-neutral-300"
                                             }`}
                                     >
                                         {min}
@@ -95,7 +130,7 @@ const SetTimeModal = () => {
                                 ))}
                             </div>
 
-                            <span className="font-bold text-2xl">:</span>
+                            <span className="font-bold text-2xl text-neutral-900 dark:text-neutral-300">:</span>
 
                             <div className="h-32 overflow-y-scroll snap-y snap-mandatory scrollbar-hide w-16 text-center">
                                 {seconds.map((sec) => (
@@ -104,14 +139,14 @@ const SetTimeModal = () => {
                                         onClick={() => handleChange("second", sec)}
                                         className={`py-2 cursor-pointer snap-center text-lg font-semibold ${sec === time.second
                                             ? "text-palevioletred"
-                                            : "text-gray-600"
+                                            : "text-gray-600 dark:text-neutral-300"
                                             }`}
                                     >
                                         {sec}
                                     </div>
                                 ))}
                             </div>
-                 
+
 
                             <div className="h-32 overflow-y-scroll snap-y snap-mandatory scrollbar-hide w-16 text-center">
                                 {["AM", "PM"].map((period) => (
@@ -120,7 +155,7 @@ const SetTimeModal = () => {
                                         onClick={() => handleChange("period", period)}
                                         className={`py-2 cursor-pointer snap-center text-lg font-semibold ${period === time.period
                                             ? "text-palevioletred"
-                                            : "text-gray-600"
+                                            : "text-gray-600 dark:text-neutral-300"
                                             }`}
                                     >
                                         {period}
@@ -129,7 +164,7 @@ const SetTimeModal = () => {
                             </div>
                         </div>
 
-                 
+
                         <div className="flex justify-center items-center gap-3 mt-6">
                             <button
                                 onClick={() => setOpenModal(false)}

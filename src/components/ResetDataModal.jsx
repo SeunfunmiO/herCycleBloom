@@ -13,11 +13,11 @@ const ResetDataModal = () => {
                 onClick={() => setOpenResetModal(true)}
                 className="flex items-center justify-between cursor-pointer w-full">
                 <div className='flex items-center gap-5'>
-                    <LucideRefreshCcw className='text-darkslategray size-5 lg:size-6' />
+                    <LucideRefreshCcw className='text-darkslategray dark:text-white size-5 lg:size-6' />
                     <h3 className="text-[15px] md:text-base font-medium lg:text-lg">Reset Data</h3>
                 </div>
 
-                <ChevronRight className="text-gray-300 w-5 md:w-6" />
+                <ChevronRight className="text-gray-300 dark:text-white w-5 md:w-6" />
             </button>
 
 
@@ -27,17 +27,21 @@ const ResetDataModal = () => {
                     onClick={() => setOpenResetModal(false)}
                 >
                     <div
-                        className="bg-white rounded-2xl shadow-lg w-11/12 max-w-md p-4 relative"
+                        className="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg w-11/12 max-w-md p-4 relative"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-lg font-bold text-gray-800 text-center mb-4">Reset Data</h2>
-                        <hr className='border border-gray-200' />
-                        <p className="text-gray-800 my-5 text-center text-sm lg:text-base">
+                        <h2 className="text-lg font-bold text-gray-800 dark:text-neutral-100 text-center mb-4">
+                            Reset Data
+                            
+                            </h2>
+                        <div className='border-gray-200 dark:border-neutral-700 border-b ml-10'></div>
+
+                        <p className="text-gray-800 my-5 dark:text-neutral-200 text-center text-sm lg:text-base">
                             Are you sure you want to reset data ? If you click proceed , all your data will be deleted permanently.
                         </p>
 
                         <div className='flex justify-center items-center my-5'>
-                            <img src="./Group 828.png" alt="Image" />
+                            <img className='dark:invert' src="./Group 828.png" alt="Image" />
                         </div>
 
                         <div className="flex justify-center items-center gap-3 mt-6">

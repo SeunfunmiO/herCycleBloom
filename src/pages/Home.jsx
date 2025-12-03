@@ -1,71 +1,241 @@
+
+import axios from 'axios'
 import { Settings } from 'lucide-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import Navbar from '../components/Navbar'
+import { Bell, Calendar, Heart, Plus } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+
 
 const Home = () => {
   const navigate = useNavigate()
+  const [name, setName] = useState('')
+  const [nextPeriodDate, setNextPeriodDate] = useState('')
+  const [currentDay, setCurrentDay] = useState(0)
+  const [tapMore, setTapMore] = useState(false)
+
+
+  const [formattedDate, setFormattedDate] = useState("")
+  const [active, setActive] = useState("log");
+
+  const menuItems = [
+    { key: "log", label: "Log Entry", icon: <Plus size={20} />, path: "/record-data" },
+    { key: "calendar", label: "View Calendar", icon: <Calendar size={20} />, path: "/view-calendar" },
+    { key: "reminder", label: "Set Reminder", icon: <Bell size={20} />, path: "/set-reminder" },
+    {
+      key: "history", label: "View History", icon: <img className="size-5 dark:invert" src="./Vector - 2.svg" alt="History" />, path: "/history"
+    }
+  ];
+
+
+
+  useEffect(() => {
+    setInterval(() => {
+      const date = new Date()
+      let dateOption = {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }
+      setFormattedDate(date.toLocaleDateString('en-US', dateOption))
+    }, 1000)
+  }, [])
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) return "Good morning";
+    if (hour >= 12 && hour < 17) return "Good afternoon";
+    if (hour >= 17 && hour < 21) return "Good evening";
+    return "Why are you still up ? 👀";
+
+  };
+
+  const [greeting, setGreeting] = useState(getGreeting)
+
+  useEffect(() => {
+
+    const interval = setInterval(() => {
+      setGreeting(getGreeting)
+    }, 60000)
+
+    return clearInterval(interval)
+  }, [])
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const id = user?.id
+
+        if (!id) {
+          toast.error("User ID not found")
+          return
+        }
+
+        const response = await axios.get(`http://localhost:5500/user/get-user/${id}`)
+        const data = response.data
+
+
+        if (data?.user) {
+          setName(data.user.name)
+
+          const lastPeriod = data.user.lastPeriodDate
+          const userCycleLength = data.user.cycleLength || 28
+
+
+
+          if (lastPeriod) {
+            // Calculate next period date
+            const userLastPeriodDate = new Date(lastPeriod)
+            const nextPeriod = new Date(lastPeriod)
+            nextPeriod.setDate(nextPeriod.getDate() + userCycleLength)
+
+            // Format date as "Month Day" (e.g., "August 15")
+            const formattedDate = nextPeriod.toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric'
+            })
+            setNextPeriodDate(formattedDate)
+
+            // Calculate days until next period
+            const today = new Date()
+            today.setHours(0, 0, 0, 0)
+            nextPeriod.setHours(0, 0, 0, 0)
+
+            // const daysRemaining = Math.ceil((nextPeriod - today) / (1000 * 60 * 60 * 24))
+            // setDaysUntilPeriod(daysRemaining > 0 ? daysRemaining : 0)
+
+            // Calculate current day of cycle
+            userLastPeriodDate.setHours(0, 0, 0, 0)
+            const daysSinceLastPeriod = Math.ceil((today - userLastPeriodDate) / (1000 * 60 * 60 * 24))
+            setCurrentDay(daysSinceLastPeriod > 0 ? daysSinceLastPeriod : 1)
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error)
+        toast.error("Failed to load user data")
+      }
+    }
+
+    fetchUser()
+  }, [])
+
 
   return (
-    <div className='m-5'>
-      <div className="flex justify-between items-center">
-        <div className="flex gap-3 items-center justify-center">
-          <img src="Profile.svg" alt="profile" />
-          <h2 className='font-bold text-xl'>Hi, Mary</h2>
-        </div>
-        <Settings size={28} />
-      </div>
+    <div
+      className='max-h-128 pb-5 lg:max-h-145 overflow-y-auto custom-scrollbar scrollbar-hide bg-white dark:bg-neutral-900 
+      transition-colors duration-300'
+    >
+      <div className='max-w-md mx-auto mt-5 px-4 flex flex-col gap-5'>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className='font-bold text-xl text-neutral-900 dark:text-neutral-100'>{greeting}, {name || "User"}!</h2>
+            <h3 className='font-semibold text-neutral-700 dark:text-neutral-400'>{formattedDate}</h3>
+          </div>
 
-      <div className='my-3'>
-        <h2 className='font-bold text-xl'>Your Cycle Overview</h2>
-        <div className='rounded-3xl mt-2 flex md:gap-0 md:justify-between items-center max-w-full' style={{ backgroundColor: '#fccbd9' }}>
-          <img className='w-40' src="./photo-curlyhair.png" alt="photo" />
-          <div className='px-2 md:px-6'>
-            <h2 className='font-bold md:text-xl'>Day 14 of 28</h2>
-            <h2 className='font-bold  md:text-lg' style={{ color: '#514145' }}>Next period:</h2>
-            <p className='font-bold text-xs md:text-base' style={{ color: '#7c646a' }}>August 15</p>
-            <p className='font-bold text-xs md:text-base' style={{ color: '#8e727b' }}>14 days to go</p>
+          <img
+            className='size-5 dark:invert'
+            src="./Bell2.svg"
+            alt="notification"
+          />
+        </div>
+
+        <div
+          className="border-2 mt-3 border-gray-200 dark:border-neutral-700 w-full h-60 rounded-lg flex flex-col justify-center 
+          bg-white dark:bg-neutral-800 transition items-center"
+        >
+          <h2 className='font-semibold text-xl text-neutral-900 dark:text-neutral-100'>Cycle Overview</h2>
+
+          <div className="grid grid-cols-1 gap-3 w-11/12 mt-8">
+            <div className="bg-[#ffe8ef] dark:bg-[#42222a] h-12 rounded-xl flex items-center justify-between px-5">
+
+              <div className="flex items-center gap-5">
+                <img
+                  className='dark:invert'
+                  src="./Calendar12.svg"
+                  alt="calendar"
+                />
+                <p className="text-neutral-800 dark:text-neutral-200 text-sm font-medium">Next Period</p>
+              </div>
+
+              <p className="font-bold text-sm  text-neutral-900 dark:text-neutral-100">
+                {nextPeriodDate || "Period may start soon"}
+              </p>
+            </div>
+
+            <div className="bg-gray-50 dark:bg-neutral-700 h-12 rounded-xl flex items-center justify-between px-5">
+
+              <div className="flex items-center gap-5">
+                <Heart className='text-[#7a757f] dark:text-neutral-300' />
+                <p className="text-neutral-800 dark:text-neutral-200 text-sm font-medium">Current Cycle</p>
+              </div>
+
+              <p className="font-bold text-sm  text-neutral-900 dark:text-neutral-100">Day {currentDay}</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className='mt-3'>
-        <h2 className='font-bold text-xl'>Quick Actions</h2>
-
-        <div className='items-center justify-center gap-6 grid grid-cols-2 md:grid-cols-4 mt-3'>
-          <button onClick={() => navigate('/log-entry')} className='px-5 py-2 rounded-2xl flex flex-col items-center justify-center/ shadow-lg border-2 ' type="button" style={{ backgroundColor: '#feebf1' }}>
-            <img src="./LOG.svg" className='w-6 md:w-10' alt="log file" />
-            <p className='font-medium text-sm md:text-sm'>Log Entry</p>
-          </button>
-
-          <button className='px-5 py-2 flex flex-col items-center justify-center/ rounded-2xl shadow-lg border-2' type="button" style={{ backgroundColor: '#feebf1' }}>
-            <img src="./calender.svg" className='w-6 md:w-10' alt="log file" />
-            <p className='font-medium text-sm md:text-sm'>View calender</p>
-          </button>
-
-          <button className='px-5 py-2 flex flex-col items-center justify-center/ rounded-2xl shadow-lg border-2' type="button" style={{ backgroundColor: '#feebf1' }}>
-            <img src="./Alarm.svg" className='w-6 md:w-10' alt="log file" />
-            <p className='font-medium text-sm md:text-sm'>Set Reminder</p>
-          </button>
-
-          <button className='px-5 py-2 flex flex-col items-center justify-center/ rounded-2xl shadow-lg border-2' type="button" style={{ backgroundColor: '#feebf1' }}>
-            <img src="./Activity History.svg" className='w-6 md:w-10' alt="log file" />
-            <p className='font-medium text-sm md:text-sm'>View History</p>
-          </button>
+        <div className="grid grid-cols-2 gap-3">
+          {
+            menuItems.map((item) => (
+              <div
+                key={item.key}
+                onClick={() => {
+                  setActive(item.key);
+                  navigate(item.path)
+                }}
+                className={`h-20 rounded-lg flex items-center flex-col justify-center cursor-pointer
+                   ${active === item.key ?
+                    "bg-palevioletred text-white" :
+                    "bg-neutral-300 text-black dark:bg-neutral-700 dark:text-neutral-200"}
+          `}
+              >
+                {item.icon}
+                <p className="font-semibold text-xs">{item.label}</p>
+              </div>
+            ))}
         </div>
-      </div>
 
-      <div className="">
-        <h2 className='font-bold text-xl text-center my-4'>Cycle Care Tip</h2>
 
-        <div className="grid md:grid-cols-2 gap-4">
-          <p className='rounded-2xl px-4 py-2 text-sm md:text-base' style={{ backgroundColor: '#feebf1' }}>
-            Light exercise can boost your energy during your luteal phase.
-          </p>
-          <p className='rounded-2xl px-4 py-2 text-sm md:text-base' style={{ backgroundColor: '#feebf1' }}>
-            Light exercise can boost your energy during your luteal phase.
-          </p>
+        <div>
+          <div className='flex items-center gap-2'>
+            <img className='dark:invert' src="./idea.svg" alt="" />
+
+            <h3 className="font-semibold text-neutral-900 dark:text-neutral-100">
+              Daily Insights Tips
+            </h3>
+          </div>
+          <div className="flex flex-col gap-2 mt-2">
+
+            <p className="font-semibold text-sm text-neutral-800 dark:text-neutral-300">
+              Staying hydrated can help you reduce period bloating and cramps.
+            </p>
+
+            {
+              tapMore && (
+                <p className='font-semibold text-sm text-neutral-800 dark:text-neutral-300'>
+                  Light exercise can boost your energy during your luteal phase.
+                </p>
+              )
+            }
+          </div>
+
+          <button
+            onClick={() => {
+              tapMore ? setTapMore(false) : setTapMore(true)
+            }}
+            className="text-[#945465] font-medium text-xs outline-0 dark:text-[#d8a8b5]">
+            {tapMore ? "Show Less....." : "Tap to Learn More....."}
+          </button>
+
         </div>
+
       </div>
+      <Navbar />
     </div>
   )
 }

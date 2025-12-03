@@ -57,121 +57,136 @@ const ChangePassword = () => {
 
 
     return (
-        <div className='max-w-md mx-auto mt-10 px-4'>
-            <div className="flex w-full items-center pb-5 mb-4 px-3">
-                <img
-                    className='cursor-pointer'
-                    onClick={() => navigate(-1)}
-                    src="./Arrow Left.svg" alt="arrow left"
-                />
-                <h1 className="font-bold text-lg md:text-xl w-full text-center">
-                    Change Password
-                </h1>
-            </div>
+        <div
+            className="bg-white dark:bg-neutral-900 h-screen transition-colors duration-200"
+        >
+            <div className='max-w-md mx-auto pt-10 px-4'>
+                <div className="flex w-full items-center pb-5 px-3">
+                    <img
+                        className='cursor-pointer dark:invert'
+                        onClick={() => navigate(-1)}
+                        src="./Arrow Left.svg" alt="back"
+                    />
+                    <h1 className="font-bold text-lg lg:text-xl w-full text-center">
+                        Change Password
+                    </h1>
+                </div>
 
-            <hr className="border border-gray-100" />
+                <div className='border-gray-200 dark:border-neutral-700 border-b'></div>
 
-            <form
-                onSubmit={formik.handleSubmit}
-                className="flex flex-col gap-10 mt-8">
+                <form
+                    onSubmit={formik.handleSubmit}
+                    className="flex flex-col gap-10 mt-8">
 
-                <div>
-                    <div className={`border rounded-2xl border-pink-200 relative flex justify-center gap-2 flex-col h-12 px-2
+                    <div>
+                        <div className={`border rounded-2xl border-pink-200  relative flex justify-center gap-2 flex-col h-12 px-2
                         ${formik.errors.oldPassword && formik.touched.oldPassword ?
-                            'border border-red-500' :
-                            'border border-gray-200'
-                        }
+                                'border border-red-500' :
+                                'border border-gray-200'
+                            }
                         `}>
-                        <input
-                            className='outline-none peer px-2'
-                            type="password"
-                            name='oldPassword'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.oldPassword}
-                        />
-                        <label
-                            className={`text-pink-200 text-sm absolute bg-white peer-focus:-top-5 peer-focus:text-sm transition-all
-                        pointer-events-none left-2 p-2 lg:text-base 
-                        ${formik.errors.oldPassword && formik.touched.oldPassword ?
-                                    'text-red-500' :
-                                    'text-gray-200'
-                                }
+                            <input
+                                className='outline-0 peer px-2 bg-transparent'
+                                type="password"
+                                name='oldPassword'
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.oldPassword}
+                            />
+                            <label
+                                className={`text-pink-200 text-sm absolute bg-white dark:bg-neutral-900 peer-focus:-top-5 
+                                    peer-focus:text-sm transition-all
+                                pointer-events-none left-2 p-2 lg:text-base 
+                                ${formik.errors.oldPassword && formik.touched.oldPassword ?
+                                        'text-red-500' :
+                                        'text-gray-200'
+                                    }
                         `}
-                            htmlFor="account-password">Old Password
-                        </label>
+                                htmlFor="account-password">Old Password
+                            </label>
+                        </div>
+                        {formik.touched.oldPassword ? <small className="text-red-500 text-[12px] md:text-sm">
+                            {formik.errors.oldPassword}
+                        </small> : ''
+                        }
                     </div>
-                    {formik.touched.oldPassword ? <small className="text-red-500 text-[12px] md:text-sm">{formik.errors.oldPassword}</small> : ''}
-                </div>
 
-                <div>
-                    <div className={`border rounded-2xl border-pink-200 relative flex justify-center gap-2 flex-col h-12 px-2
+                    <div>
+                        <div className={`border rounded-2xl border-pink-200 relative flex justify-center gap-2 flex-col h-12 px-2
                         ${formik.errors.newPassword && formik.touched.newPassword ?
-                            'border border-red-500' :
-                            'border border-gray-200'
-                        }
+                                'border border-red-500' :
+                                'border border-gray-200'
+                            }
                         `}>
-                        <input
-                            className='outline-none peer px-2'
-                            type="password"
-                            name='newPassword'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.newPassword}
-                        />
-                        <label
-                            className={`text-pink-200 text-sm absolute bg-white peer-focus:-top-5 peer-focus:text-sm transition-all
-                        pointer-events-none left-2 p-2 lg:text-base 
+                            <input
+                                className='outline-0 peer px-2 bg-transparent'
+                                type="password"
+                                name='newPassword'
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.newPassword}
+                            />
+                            <label
+                                className={`text-pink-200 text-sm absolute bg-white  dark:bg-neutral-900 peer-focus:-top-5 
+                                    peer-focus:text-sm transition-all pointer-events-none left-2 p-2 lg:text-base 
                         ${formik.errors.newPassword && formik.touched.newPassword ?
-                                    'text-red-500' :
-                                    'text-gray-200'
-                                }
+                                        'text-red-500' :
+                                        'text-gray-200'
+                                    }
                         `}
-                            htmlFor="account-password">New Password
-                        </label>
-                    </div>
-                    {formik.touched.newPassword ? <small className="text-red-500 text-[12px] md:text-sm">{formik.errors.newPassword}</small> : ''}
-                </div>
-
-                <div>
-                    <div className={`border rounded-2xl border-pink-200 relative flex justify-center gap-2 flex-col h-12 px-2
-                        ${formik.errors.confirmNewPassword && formik.touched.confirmNewPassword ?
-                            'border border-red-500' :
-                            'border border-gray-200'
+                                htmlFor="account-password">New Password
+                            </label>
+                        </div>
+                        {formik.touched.newPassword ? <small className="text-red-500 text-[12px] md:text-sm">
+                            {formik.errors.newPassword}
+                        </small> : ''
                         }
-                        `}>
-                        <input
-                            className='outline-none peer px-2'
-                            type="password"
-                            name='confirmNewPassword'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.confirmNewPassword}
-                        />
-                        <label
-                            className={`text-pink-200 text-sm absolute bg-white peer-focus:-top-5 peer-focus:text-sm transition-all
-                        pointer-events-none left-2 p-2 lg:text-base 
-                        ${formik.errors.confirmNewPassword && formik.touched.confirmNewPassword ?
-                                    'text-red-500' :
-                                    'text-gray-200'
-                                }
-                        `}
-                            htmlFor="account-password">Confirm New Password
-                        </label>
                     </div>
-                    {formik.touched.confirmNewPassword ? <small className="text-red-500 text-[12px] md:text-sm">{formik.errors.confirmNewPassword}</small> : ''}
-                </div>
 
-                <button
-                    onClick={handleLoader}
-                    disabled={loading || saved}
-                    className={` w-full py-3 rounded-2xl text-white font-medium 
-                    ${saved ? "bg-pink-300 cursor-not-allowed" : "bg-palevioletred cursor-pointer"}
+                    <div>
+                        <div className={`border rounded-2xl border-pink-200 relative flex justify-center gap-2 flex-col h-12 px-2
+                        ${formik.errors.confirmNewPassword && formik.touched.confirmNewPassword ?
+                                'border border-red-500' :
+                                'border border-gray-200'
+                            }
+                        `}>
+                            <input
+                                className='outline-0 peer px-2 bg-transparent'
+                                type="password"
+                                name='confirmNewPassword'
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.confirmNewPassword}
+                            />
+                            <label
+                                className={`text-pink-200 text-sm absolute bg-white  dark:bg-neutral-900 peer-focus:-top-5 
+                                    peer-focus:text-sm transition-all pointer-events-none left-2 p-2 lg:text-base 
+                        ${formik.errors.confirmNewPassword && formik.touched.confirmNewPassword ?
+                                        'text-red-500' :
+                                        'text-gray-200'
+                                    }
+                        `}
+                                htmlFor="account-password">Confirm New Password
+                            </label>
+                        </div>
+                        {formik.touched.confirmNewPassword ? <small className="text-red-500 text-[12px] md:text-sm">
+                            {formik.errors.confirmNewPassword}
+                        </small> : ''
+                        }
+                    </div>
+
+                    <button
+                        onClick={handleLoader}
+                        disabled={loading || saved}
+                        className={` w-full py-3 rounded-2xl text-white font-medium 
+     
+                            ${saved ? "bg-pink-300 cursor-not-allowed" : "bg-palevioletred cursor-pointer"}
                     `}>
-                    {loading ? "Saving..." : saved ? "Saved" : "Save"}
-                </button>
-            </form>
+                        {loading ? "Saving..." : saved ? "Saved" : "Save"}
+                    </button>
+                </form>
 
+            </div>
         </div>
     )
 }

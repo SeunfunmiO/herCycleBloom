@@ -42,7 +42,10 @@ const LanguageSelector = () => {
     );
 
     return (
-        <div className="w-full max-w-md mx-auto p-4 bg-white rounded-xl shadow-lg border border-gray-100 transition mt-10">
+        <div
+            className="w-full max-w-md mx-auto p-4 bg-white rounded-xl dark:bg-neutral-800 shadow-lg border border-gray-100 
+        transition-colors mt-10 dark:border-neutral-700"
+        >
             <input
                 type="text"
                 placeholder="Search language..."
@@ -52,7 +55,7 @@ const LanguageSelector = () => {
             />
 
             <div className="max-h-90 overflow-y-auto custom-scrollbar scrollbar-hide flex flex-col gap-5 ">
-                {filteredLanguages.map((lang,index) => (
+                {filteredLanguages.map((lang, index) => (
                     <div key={lang.code}>
                         <button
 
@@ -81,14 +84,14 @@ const LanguageSelector = () => {
 
                         {index !== filteredLanguages.length - 1 && (
                             <div className="px-4">
-                                <div className="border-t border-gray-200" />
+                                <div className="border-t border-gray-200 dark:border-neutral-700" />
                             </div>
                         )}
                     </div>
                 ))}
 
                 {filteredLanguages.length === 0 && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-3">
+                    <p className="text-sm text-gray-500 dark:text-neutral-400 text-center py-3">
                         No language found
                     </p>
                 )}

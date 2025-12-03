@@ -1,68 +1,85 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, EffectFade } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/effect-fade";
 import { useNavigate } from 'react-router-dom';
-
-
+import { ArrowRight } from 'lucide-react';
 
 const Onboarding = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const swiperRef = useRef(null)
+
+  const slides = [
+    {
+      img: "./Frame 2131328858.png",
+      title: "Welcome - Your Cycle, Your Way",
+      desc: "Track your period, predict ovulation, and understand your body better with personalized insights made just for you."
+    },
+    {
+      img: "./Layer_1.png",
+      title: "Discover How We Help You Everyday",
+      desc: "Predict your period and ovulation, log symptoms to spot patterns, and get personalized insights tailored just for you."
+    },
+    {
+      img: "./herbloomImage.png",
+      title: "You're All Set to Take Control",
+      desc: "Start tracking, get smarter insights, and feel confident about every phase of your cycle."
+    }
+  ];
+
+  const handleNext = () => {
+    if (currentSlide === slides.length - 1) {
+      navigate('/registration');
+    } else {
+      swiperRef.current.slideNext();
+    }
+  }
+
   return (
-    <>
-      <div className="w-full h-[300px] mb-20 relative/ text-center">
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={30}
-          centeredSlides={true}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          pagination={{ clickable: true }}
-          loop={true}
-          grabCursor={true} // enables swipe effect
-          className="mySwiper h-full w-full"
-        >
-
-          <SwiperSlide>
-            <div className='flex justify-end mt-5'>
-              <button className='font-semibold rounded-3xl px-8 py-1 hover:bg-pink-500 hover:text-white  border mx-3 border-pink-400'>
-                skip
+    <div className="w-full h-full text-center max-w-md mx-auto px-4">
+      <Swiper
+        onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex)}
+        modules={[Autoplay, Pagination]}
+        spaceBetween={30}
+        centeredSlides
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        loop={false}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            {index === 0 && (
+              <button
+                onClick={() => navigate('/registration')}
+                className="font-semibold border border-palevioletred px-8 py-1 rounded-full float-end mt-5"
+              >
+                Skip
               </button>
-            </div>
-            <div className='flex justify-center flex-col items-center mb-14 '>
-              <div><img src="./Frame 2131328858.png" alt="her" /></div>
-              <h1 className=' font-bold mb-3 text-2xl'>Welcome - Your Cycle, Your Way</h1>
-              <p className=" font-bold text-sm md:text-base">Track your period, predict ovulation, and understand your body better with personalized insights made just for you. </p>
-            </div>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <div className='flex flex-col justify-center items-center mb-12'>
-              <div> <img src="./Layer_1.png" alt="her" /></div>
-              <h1 className='font-bold mb-3 text-2xl'>Discover How We Can Help You Everyday</h1>
-              <p className="font-bold text-sm md:text-base">Predict your period and ovulation, log symptoms to spot patterns, and get personalized insights just for you. </p>
+            )}
+            <div className={`flex flex-col gap-5 items-center justify-center w-full h-full
+               ${currentSlide === slides.length - 1 ? 'mb-5 mt-12 lg:mb-12 lg:mt-0' : 'mb-12'}`}>
+              <img src={slide.img} />
+              <h1 className="font-bold text-2xl">{slide.title}</h1>
+              <p className="font-bold text-sm">{slide.desc}</p>
             </div>
           </SwiperSlide>
+        ))}
+      </Swiper>
 
-          <SwiperSlide>
-            <div className='flex justify-center flex-col items-center mt-14'>
-              <div><img src="./herbloomImage.png" alt="her" /></div>
-              <h1 className='text-center font-bold mb-3 text-2xl'>You're All Set to Take Control</h1>
-              <p className="text-center font-bold text-sm md:text-base">Start tracking, get smarter insights, and feel confident about every phase of your cycle  </p>
-            </div>
-          </SwiperSlide>
-        </Swiper>
-        <button onClick={()=>navigate('/registration')}
-          style={{ backgroundColor: '#eb477e' }}
-          className='mt-20 px-32 py-2 shadow-lg font-bold text-2xl rounded-3xl'>Next
-        </button>
-      </div>
-    </>
-  )
-}
+      <button
+        onClick={handleNext}
+        className="my-10 w-11/12 py-2 font-bold text-lg lg:text-xl rounded-full shadow-gray-400 shadow-sm bg-palevioletred"
+      >
+        <div className="flex justify-center items-center gap-2">
+          {currentSlide === slides.length - 1 ? 'Get Started' : "Next"}
+          {currentSlide === slides.length - 1 && <ArrowRight />}
+        </div>
+      </button>
+    </div>
+  );
+};
 
-export default Onboarding
+export default Onboarding;

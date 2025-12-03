@@ -1,19 +1,27 @@
 import React from 'react'
 import CalendarComponent from '../components/Calendar'
 import Navbar from '../components/Navbar'
+import { useNavigate } from 'react-router-dom'
 
 const LogEntry1 = () => {
+    const navigate = useNavigate()
+
     return (
-        <div style={{ backgroundColor: 'var(--bgLavender)' }}>
-            <div className='p-6 h-screen'>
+        <div className='bg-lavender h-screen dark:bg-neutral-900'>
+            <div className='max-w-md mx-auto p-4 max-h-120 lg:max-h-130 overflow-y-auto custom-scrollbar scrollbar-hide'>
                 <div className='flex items-center gap-5 mb-3'>
-                    <img src="./caret.svg" alt="" />
-                    <h2 className='font-medium text-lg'>Record Data</h2>
+                    <img
+                        onClick={() => navigate(-1)}
+                        className='size-3.5 dark:invert'
+                        src="./caret.svg" alt="" />
+                    <h2 className='font-medium text-lg text-neutral-900 dark:text-neutral-100'>
+                        Record Data
+                    </h2>
                 </div>
 
-                <div className='border-b-2' style={{ borderBottomColor: '#8e727b' }}></div>
+                <div className=" border-gray-400 dark:border-neutral-700 border-b"></div>
 
-                <h2 className='font-medium text-lg mt-5'>Select Date</h2>
+                <h2 className='font-medium mt-5'>Select Date</h2>
                 <CalendarComponent />
             </div>
             <Navbar />

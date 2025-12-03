@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Onboarding from './pages/Onboarding'
 import Registration from './pages/Registration'
@@ -8,7 +8,6 @@ import Signup from './pages/Signup'
 import CreateProfile from './pages/CreateProfile'
 import AllowNotification from './pages/AllowNotification'
 import GetReady from './pages/GetReady'
-import LandingPage from './pages/LandingPage'
 import LogEntry1 from './pages/LogEntry1'
 import LogEntry2 from './pages/LogEntry2'
 import SuccessPage from './pages/SuccessPage'
@@ -23,19 +22,54 @@ import EditPeriodDuration from './pages/EditPeriodDuration'
 import Account from './pages/Account'
 import ImportFile from './pages/ImportFile'
 import ChangePassword from './pages/ChangePassword'
-import SettingsRemainder from './pages/SettingsRemainder'
 import Languages from './pages/Languages'
 import Theme from './pages/Theme'
 import History from './pages/History'
 import CycleDetails from './components/CycleDetails'
 import ExportDataCycle from './pages/ExportDataCycle'
+import FlowCare from './pages/FlowCare'
+import AiChat from './pages/AiChat'
+import ToastContainer from './toast/ToastContainer'
+import SplashScreen from './components/SplashScreen'
+import SetRemainder from './pages/SetRemainder'
 
 
+const lightOnlyRoutes = [
+  "/",
+  '/onboarding',
+  '/get-ready',
+  '/allow-Notification',
+  '/create-profile'
+]
+
+function useApplyTheme() {
+  const location = useLocation()
+
+
+  useEffect(() => {
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem("theme")
+
+    if (lightOnlyRoutes.includes(location.pathname)) {
+      html.classList.remove("dark");
+      return;
+    }
+    if (savedTheme === "dark") {
+      html.classList.add("dark")
+    } else {
+      html.classList.remove("dark")
+    }
+
+  }, [location.pathname]);
+
+}
 const App = () => {
+  useApplyTheme();
   return (
     <>
+      <ToastContainer />
       <Routes>
-        <Route path='/' element={<LandingPage />} />
+        <Route path='/' element={< SplashScreen />} />
         <Route path='/onboarding' element={<Onboarding />} />
         <Route path='/registration' element={<Registration />} />
         <Route path='/log-in' element={<Login />} />
@@ -59,17 +93,15 @@ const App = () => {
         <Route path='/account' element={<Account />} />
         <Route path='/import-file' element={<ImportFile />} />
         <Route path='/change-password' element={<ChangePassword />} />
-        <Route path='/set-reminder' element={<SettingsRemainder />} />
+        <Route path='/set-reminder' element={<SetRemainder />} />
         <Route path='/languages' element={<Languages />} />
         <Route path='/history' element={<History />} />
         <Route path='/cycle-details' element={<CycleDetails />} />
         <Route path='/export-data' element={<ExportDataCycle />} />
-
-
+        <Route path='/flow-care' element={<FlowCare />} />
+        <Route path='/ai-chat' element={<AiChat />} />
 
       </Routes>
-
-
     </>
   )
 }

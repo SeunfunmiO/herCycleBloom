@@ -2,31 +2,35 @@ import { ChevronRight, ChevronsDownIcon } from 'lucide-react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
+import HistoryFilter from '../components/HistoryFilter'
 
 const History = () => {
     const navigate = useNavigate()
 
     return (
 
-        <div>
-            <div className="px-4">
-                <div className="flex justify-between items-center mb-5 mt-10">
+        <div className='bg-white dark:bg-neutral-900 transition-colors duration-200'>
+            <div className="max-w-md mx-auto px-4">
+                <div className="flex justify-between items-center pb-5 pt-10">
                     <img
-                    className='cursor-pointer'
+                        className='cursor-pointer dark:invert'
                         onClick={() => navigate(-1)}
-                        src="./Arrow Left.svg" alt="arrow left" />
+                        src="./Arrow Left.svg"
+                        alt="arrow left"
+                    />
                     <h1 className="text-lg font-bold">History</h1>
-                   
-                        <div>
-                            <ChevronsDownIcon className='cursor-pointer' />
-                        </div>
+
+                    <HistoryFilter />
+
                 </div>
 
-                <h1 className="font-bold text-lg lg:text-lg">Past Cycles</h1>
+                <h1 className="font-bold text-lg">Past Cycles</h1>
 
-                <div className='mt-8 flex flex-col gap-3 max-h-90 overflow-y-auto custom-scrollbar scrollbar-hide'>
+                <div className='mt-8 flex flex-col gap-3 pb-20'>
 
-                    <div className='flex justify-between items-center cursor-pointer'>
+                    <div 
+                    onClick={()=>navigate('/cycle-details')}
+                    className='flex justify-between items-center cursor-pointer'>
                         <div className='flex flex-col'>
                             <p className="font-medium">January 2025</p>
                             <small className="text-dimgray font-medium">January 3 - January 7</small>
@@ -40,7 +44,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between items-center mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -56,7 +60,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -72,11 +76,11 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
-                    <div 
-                    onClick={()=>navigate("/cycle-details")}
-                    className='flex justify-between mt-2 cursor-pointer'>
+                    <div
+                        onClick={() => navigate("/cycle-details")}
+                        className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
                             <p className="font-medium">July 2025</p>
                             <small className="text-dimgray font-medium">July 3 - July 7</small>
@@ -90,7 +94,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -106,7 +110,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -122,7 +126,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -138,7 +142,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -154,7 +158,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
 
                     <div className='flex justify-between mt-2 cursor-pointer'>
                         <div className='flex flex-col'>
@@ -170,7 +174,7 @@ const History = () => {
                         </div>
                     </div>
 
-                    <hr className="border border-gray-100" />
+                    <div className="border-b border-gray-200 dark:border-neutral-700"></div>
                 </div>
             </div>
             <Navbar />
